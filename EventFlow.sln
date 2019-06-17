@@ -101,6 +101,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventFlow.MongoDB", "Source
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventFlow.MongoDB.Tests", "Source\EventFlow.MongoDB.Tests\EventFlow.MongoDB.Tests.csproj", "{2D837E47-E92B-422E-AC29-AB5607E9E6D1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventFlow.Validation", "EventFlow.Validation\EventFlow.Validation.csproj", "{E6B7F134-FAB8-4806-A8D4-975CD015BF4E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventFlow.Validation.Tests", "EventFlow.Validation.Tests\EventFlow.Validation.Tests.csproj", "{3D9FB659-6083-40FE-9CF2-5FE3D5291C22}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -243,6 +247,14 @@ Global
 		{2D837E47-E92B-422E-AC29-AB5607E9E6D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2D837E47-E92B-422E-AC29-AB5607E9E6D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2D837E47-E92B-422E-AC29-AB5607E9E6D1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E6B7F134-FAB8-4806-A8D4-975CD015BF4E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E6B7F134-FAB8-4806-A8D4-975CD015BF4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E6B7F134-FAB8-4806-A8D4-975CD015BF4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E6B7F134-FAB8-4806-A8D4-975CD015BF4E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D9FB659-6083-40FE-9CF2-5FE3D5291C22}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D9FB659-6083-40FE-9CF2-5FE3D5291C22}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D9FB659-6083-40FE-9CF2-5FE3D5291C22}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D9FB659-6083-40FE-9CF2-5FE3D5291C22}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -282,6 +294,8 @@ Global
 		{5B2706DA-B66C-4CD9-8441-8C9BDACB8348} = {92F3C263-8C0C-4D12-B41A-452E48D2E5E8}
 		{C34BFD0C-E7CD-4DEE-A1F4-8FBE9DE0B239} = {7832AC5E-5CE2-4694-BA43-E53222B75EDC}
 		{2D837E47-E92B-422E-AC29-AB5607E9E6D1} = {7832AC5E-5CE2-4694-BA43-E53222B75EDC}
+		{E6B7F134-FAB8-4806-A8D4-975CD015BF4E} = {3A34F6A2-64B0-4730-A0EB-D324BC755538}
+		{3D9FB659-6083-40FE-9CF2-5FE3D5291C22} = {3A34F6A2-64B0-4730-A0EB-D324BC755538}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {17607E2C-4E8E-45A2-85BD-0A5808E1C0F3}
