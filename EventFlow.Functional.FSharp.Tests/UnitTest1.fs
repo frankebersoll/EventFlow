@@ -1,15 +1,15 @@
-namespace Tests
+namespace EventFlow.Functional.FSharp.Tests
 
-module Documents =
+open NUnit.Framework
+open EventFlow.Core
+open EventFlow.Functional
+open EventFlow.Aggregates
+open EventFlow.Extensions
+open EventFlow
+open EventFlow.ValueObjects
+open EventFlow.Commands
 
-    open NUnit.Framework
-    open EventFlow.Core
-    open EventFlow.Functional
-    open EventFlow.Aggregates
-    open EventFlow.Extensions
-    open EventFlow
-    open EventFlow.ValueObjects
-    open EventFlow.Commands
+module Domain =
 
     type DocumentId(id) = inherit Identity<DocumentId>(id)
     
@@ -33,35 +33,44 @@ module Documents =
     type DocumentCommand = Command<DocumentAggregate, DocumentId>
 
     type CreateDocument(id, metadata) = inherit DocumentCommand(id) with
-        member x.metadata = metadata
+        member this.metadata = metadata
+
+    let private createDocument (c: CreateDocument) = { DocumentCreated.metadata = c.metadata }
+    let private onDocumentCreated (e: DocumentCreated) = DocumentState.Active e.metadata
+
+    let documentAggregate: FnAgg.AggDefinition<DocumentAggregate, DocumentId, DocumentState> = 
+        FnAgg.build() { 
+            initialState (fun () -> DocumentState.Initial)
+            handle createDocument 
+            transition onDocumentCreated
+        }
+
+open Domain
+open EventFlow.Configuration
+open EventFlow.EventStores
+open FsUnit
     
-    type AggregateTests () =
+type FSharpAggregateTests () =
 
-        let createDocument (c: CreateDocument) = { DocumentCreated.metadata = c.metadata }
+    let getEvents (resolver: IResolver) =
+        let persistence = resolver.Resolve<IEventStore>()
+        persistence.LoadAllEvents(GlobalPosition.Start, 100).DomainEvents
 
-        let onDocumentCreated (e: DocumentCreated) = DocumentState.Active e.metadata
+    [<SetUp>]
+    member this.Setup () = ()
 
-        [<SetUp>]
-        member this.Setup () = ()
-
-        [<Test>]
-        member this.Test1 () =
+    [<Test>]
+    member this.SimpleAggregateTest () =
                             
-            let customerDefinition = FnAgg.build() { 
+        let options = EventFlowOptions.New.AddDefaults(typeof<FSharpAggregateTests>.Assembly)
+        FnAgg.register options documentAggregate
+        let resolver = options.CreateResolver()
+        let bus = resolver.Resolve<ICommandBus>()
 
-                initialState (fun () -> DocumentState.Initial)
+        let command = CreateDocument(DocumentId.New, { Metadata.title = Title("asdf") })
 
-                handle createDocument 
-                transition onDocumentCreated
-            }
+        bus.Publish(command) |> ignore
 
-            let o = EventFlowOptions.New.AddDefaults(typeof<AggregateTests>.Assembly)
-            FnAgg.register o customerDefinition
+        let event = resolver |> getEvents
+        event |> should haveCount 1
 
-            let bus = o.CreateResolver().Resolve<ICommandBus>()
-
-            let command = CreateDocument(DocumentId.New, { Metadata.title = Title("asdf") })
-
-            bus.Publish(command) |> ignore
-
-            Assert.Pass()

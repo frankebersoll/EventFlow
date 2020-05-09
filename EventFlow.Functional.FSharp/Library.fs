@@ -29,7 +29,7 @@
         let convertDefinition d = 
             new AggregateDefinition<'Agg,'Id,'State>(System.Func<'State>(d.initialState), d.handlers, d.transitions)
 
-        FnAgg.registerAggregate(definition |> convertDefinition, options)
+        FnAgg.RegisterAggregate(definition |> convertDefinition, options)
 
     let addTransition definition (f: TransitionF<'Agg,'Id,'State>) = 
 
